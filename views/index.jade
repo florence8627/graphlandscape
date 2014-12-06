@@ -1,0 +1,12 @@
+extend layout
+
+block content
+  p
+  p
+  - if (typeof(user) == 'undefined'){
+    a(href="/login") Login
+    |  or 
+    a(href="/signup") Signup
+  -} else {
+    a(href="/home") Home
+  -}

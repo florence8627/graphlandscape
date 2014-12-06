@@ -1,0 +1,37 @@
+doctype html
+html(lang="en")
+  head
+    title Graph Landscape #{title}
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='shortcut icon', href='favicon.ico', type='image/x-icon') 
+    - if (!nojs)
+      script(src='/cache/modernizr.custom.79639.js')
+      script(src='/cache/d3.v3.min.js')
+      script(src='/cache/jquery-2.1.1.min.js')
+      script(src='/cache/FileSaver.min.js')
+      script(src='/cache/canvas-toBlob.js')
+      script(src='/javascripts#{path}.js')
+  body
+    header
+      .section.group.sec_header
+        #before
+        .col.span_1_of_3.left
+          a.top(href="/") Graph Landscape
+          - if (path !== "/")
+            |  / 
+            a.top(href="#{path}") #{title}
+        .col.span_1_of_3.center
+          p
+        .col.span_1_of_3.right
+          - if (typeof(user) !== 'undefined'){
+            a.top(href="/profile") #{user.local.username}
+            |  - 
+            a.top(href="/logout") Logout
+          -} else {
+            a.top(href="/login") Login
+            |  or 
+            a.top(href="/signup") Signup
+          -}
+    .container
+      .main-content
+        block content

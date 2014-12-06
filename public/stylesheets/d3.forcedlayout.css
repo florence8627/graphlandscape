@@ -1,0 +1,95 @@
+.forcedlayout > svg, .forcedlayout > canvas { 
+  font: 14px sans-serif;
+  background: rgba(255,255,255,0.5);
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+  position: absolute;
+}
+.forcedlayout > canvas {
+  pointer-events: none;
+}
+
+.forcedlayout text {
+  pointer-events: all;
+}
+
+.forcedlayout rect.background {
+  fill: transparent;
+}
+.forcedlayout rect.background:hover {
+  fill: rgba(120,120,120,0.2);
+}
+.forcedlayout .resize rect {
+  fill: rgba(0,0,0,0.1);
+}
+.forcedlayout rect.extent {
+  fill: rgba(255,255,255,0.25);
+  stroke: rgba(0,0,0,0.6);
+}
+.forcedlayout .axis line, .forcedlayout .axis path {
+  fill: none;
+  stroke: #222;
+  shape-rendering: crispEdges;
+}
+.forcedlayout canvas {
+  opacity: 1;
+  -moz-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+}
+.forcedlayout canvas.faded {
+  opacity: 0.25;
+}
+
+.forcedlayout path.link {
+        stroke: steelblue;
+        stroke-width: 1;
+        fill: none;
+}
+
+.forcedlayout path.link.twofive {
+  opacity: 0.1;
+}
+
+.forcedlayout path.link.fivezero {
+  opacity: 0.2;
+}
+
+.forcedlayout path.link.sevenfive {
+  opacity: 0.4;
+}
+
+.forcedlayout path.link.onezerozero {
+  opacity: 0.6;
+}
+
+.forcedlayout path.link.twofive_p {
+  stroke: red;
+  opacity: 0.2;
+}
+
+.forcedlayout path.link.fivezero_p {
+  stroke: red;
+  opacity: 0.4;
+}
+
+.forcedlayout path.link.sevenfive_p {
+  stroke: red;
+  opacity: 0.7;
+}
+
+.forcedlayout path.link.onezerozero_p {
+  stroke: red;
+  opacity: 0.9;
+}
+
+.forcedlayout circle {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.forcedlayout text {
+  fill: #000;
+  font: 10px sans-serif;
+  pointer-events: none;
+}

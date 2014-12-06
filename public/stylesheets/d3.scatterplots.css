@@ -1,0 +1,72 @@
+.scatterplots > svg, .scatterplots > canvas { 
+  font: 14px sans-serif;
+  background: rgba(255,255,255,0.5);
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+  position: absolute;
+}
+.scatterplots > canvas {
+  pointer-events: none;
+}
+
+.scatterplots text {
+  pointer-events: all;
+}
+
+.scatterplots rect.background {
+  fill: transparent;
+}
+.scatterplots rect.background:hover {
+  fill: rgba(120,120,120,0.2);
+}
+.scatterplots .resize rect {
+  fill: rgba(0,0,0,0.1);
+}
+.scatterplots rect.extent {
+  fill: rgba(255,255,255,0.25);
+  stroke: rgba(0,0,0,0.6);
+}
+.scatterplots .axis line, .scatterplots .axis path {
+  fill: none;
+  stroke: #222;
+  shape-rendering: crispEdges;
+}
+.scatterplots canvas {
+  opacity: 1;
+  -moz-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+}
+.scatterplots canvas.faded {
+  opacity: 0.25;
+}
+
+.scatterplots path {
+        stroke: steelblue;
+        stroke-width: 1;
+        fill: none;
+      }
+      
+.scatterplots .axis {
+  shape-rendering: crispEdges;
+}
+
+.scatterplots .x.axis line .x.axis path{
+  fill: none;
+  stroke: #000;
+}
+
+.scatterplots .y.axis line, .y.axis path {
+  fill: none;
+  stroke: #000;
+}
+
+.scatterplots .dot {
+  fill: #000;
+  stroke-width: 1px;
+  stroke: #000;
+}
+
+.scatterplots .dot.hidden {
+  opacity: .3;
+}
+

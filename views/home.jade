@@ -1,0 +1,80 @@
+extend layout
+block content
+  .section.vis.group.sec_1_of_3
+    #before
+    .col.vis.span_1_of_1
+      #pcp.vis.left.parcoords
+    #after
+  .section.vis.group.sec_2_of_3
+    #before
+    .col.vis.span_1_of_1
+      #msp.vis.left.scatterplots
+    #after
+  .section.vis.group.sec_3_of_3
+    #before
+    .col.vis.span_1_of_3
+      #flo.vis.left.forcedlayout
+    .col.vis.span_1_of_3
+      .vis.console
+        textarea#sql_textbox(name='text', rows='5')
+          | SELECT NODES, EDGES, DENSITY, COMPONENTS, MINDEG, MAXDEG, AVGDEG, CLUSTERING_COEFFICIENT AS CLSTR_CO, AVGSHPATH, DIAMETER, LOOPS, FAMILY
+          | FROM GRAPHS WHERE ID < 50
+        table.transp
+          tbody
+            tr
+              td.transp
+                button#btnSelect(onclick='onSelect(this)') Select
+              td#status1.transp
+                img(class="select-status super-centered" src="../ajax-blank.png")
+              td#status2.transp
+                img(class="select-status super-centered" src="../ajax-blank.png")
+              td#status3.transp
+                img(class="select-status super-centered" src="../ajax-blank.png")
+        table.transp
+          tbody
+            tr
+              td.transp
+                label#lblBrushMode(for='sltBrushMode') Brush mode:
+                select#sltBrushMode
+                  option(selected="selected") None
+                  option 1D-axes
+                  option 2D-strums
+                label#lblPredicate(for='sltPredicate') Predicate:
+                select#sltPredicate
+                  option AND
+                  option OR
+                button#btnReset Reset Brushes
+        table.transp
+          tbody
+            tr
+              td.transp
+                button#btnToggleMds(onclick='onToggleMds(this)') MDS Preloaded
+              td.transp
+                button#btnToggleUpdate(onclick='onToggleUpdate(0)',value='clean') No Updates
+        table.transp
+          tbody
+            tr
+              td.transp
+                label#lblSavedData Saved Data:
+                select#sltlSavedData
+                  option(selected="selected") None
+                button#btnRedraw(onclick='onRedraw(this)') Redraw
+        table.transp
+          tbody
+            tr
+              td.transp
+                label#lblDeleteDims Delete Dimensions:
+                button#btnResetDims(onclick='onResetDims(this)') Reset
+        table.transp
+          tbody
+            tr
+              td.transp
+                label Annotation:
+              td.transp
+                textarea#ids_note(name='text', rows='1')
+            tr
+              td.transp
+                button#btnDownloadIDs(onclick='onDownloadIDs()') Download IDs
+    .col.vis.span_1_of_3
+      #mds.vis.left.multidscale
+    #after

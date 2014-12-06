@@ -1,0 +1,447 @@
+/*
+ * Import nib
+ */
+/*
+ * Grab a custom font from Google
+ */
+@import url("http://fonts.googleapis.com/css?family=Quicksand");
+/*
+ * Nib provides a CSS reset
+ */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+body {
+  line-height: 1;
+  color: #000;
+  background: #fff;
+}
+ol,
+ul {
+  list-style: none;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+}
+caption,
+th,
+td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+a img {
+  border: none;
+}
+/*
+ * Store the main color and
+ * background color as variables
+ */
+/*  GLOBAL OBJECTS ============================================================================= */
+.breaker {
+  clear: both;
+}
+.group:before {
+  content: "";
+  display: table;
+}
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.group {
+  zoom: 1;
+}
+.floatleft {
+  float: left;
+}
+.floatright {
+  float: right;
+}
+.section {
+  display: block;
+  clear: both;
+  padding: 0px;
+  margin: 0 0 0 0;
+}
+.col {
+  height: 100%;
+  display: block;
+  float: left;
+  margin: 0 0 0 0;
+}
+.col:nth-child(2) {
+  margin-left: 0;
+}
+/*  SECTION HEIGHTS ============================================================================= */
+.sec_header {
+  height: 12px;
+}
+.sec_1_of_3 {
+  height: 50%;
+}
+.sec_2_of_3 {
+  height: 10%;
+}
+.sec_3_of_3 {
+  height: calc(40% - 8px);
+}
+/*  GRID OF ONE   =============================================================================== */
+.span_1_of_1 {
+  width: 100%;
+}
+/*  GRID OF THREE   ============================================================================= */
+.span_3_of_3 {
+  width: 100%;
+}
+.span_2_of_3 {
+  width: 66.66%;
+}
+.span_1_of_3 {
+  width: 33.33%;
+}
+/*  GRID OF FOUR
+============================================================================= */
+.span_4_of_4 {
+  width: 100%;
+}
+.span_3_of_4 {
+  width: 75%;
+}
+.span_2_of_4 {
+  width: 50%;
+}
+.span_1_of_4 {
+  width: 35%;
+}
+div {
+  height: 100%;
+  display: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+div.vis {
+  display: block;
+}
+html {
+  height: 100%;
+}
+body {
+  font-family: 'Georgia';
+  background-color: #faf9f0;
+  color: #444;
+  overflow: auto;
+  height: 100%;
+}
+header {
+  font-family: 'Quicksand';
+  color: #fff;
+  padding: 5px 5px;
+  font-size: 12px;
+  background-color: #005aad;
+  border-bottom: 1px solid #003f79;
+}
+header .col {
+  height: 100%;
+  display: block;
+  float: left;
+  margin: 0 0 0 0;
+}
+header a.top {
+  text-decoration: none;
+  font-family: 'Quicksand';
+  padding: 5px 5px;
+  color: #fff;
+  font-size: inherit;
+  background-color: #005aad;
+}
+header .left {
+  text-align: left;
+}
+header .center {
+  text-align: center;
+}
+header .right {
+  text-align: right;
+  font-size: 10px;
+}
+.container {
+  display: block;
+  height: calc(100% - 23px);
+  width: 100%;
+  margin: 0;
+  overflow: auto;
+}
+.container .main-content {
+  display: block;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+.container .main-content .left {
+  text-align: left;
+}
+.container .main-content textarea {
+  width: 100%;
+}
+.container .main-content table.transp {
+  border-style: none;
+}
+.container .main-content td.transp {
+  border-style: none;
+}
+.container .main-content .console {
+  margin: 4px 4px 4px 4px;
+}
+.container .main-content label {
+  font-family: 'Courier New';
+  font-size: 12px;
+}
+/* ============================================================================================= */
+h1 {
+  font-size: 25px;
+  text-align: center;
+}
+p {
+  margin-bottom: 20px;
+}
+p {
+  line-height: 1.8;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #000;
+  font-weight: normal;
+}
+td.tripart {
+  width: 33%;
+}
+table.hidden {
+  visibility: hidden;
+}
+table.cs_pl_tbl {
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: normal;
+}
+th.header1 {
+  font-family: 'Quicksand';
+  font-weight: bold;
+  padding: 10px 10px;
+  color: #138eff;
+  font-size: 25px;
+  text-align: left;
+  background-color: #faf9f0;
+  text-shadow: 0px -1px 0px #003f79;
+}
+th.header2 {
+  background-color: #005aad;
+  font-family: 'Quicksand';
+  font-weight: bold;
+  padding: 5px 5px;
+  color: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
+}
+th.header3 {
+  font-weight: bold;
+  color: #138eff;
+}
+th.header3-1 {
+  font-weight: bold;
+  text-align: center;
+}
+th.header4 {
+  font-weight: bold;
+}
+tr.hi_light {
+  background-color: #9fc1e0;
+}
+tr.updated {
+  font-weight: bold;
+}
+tr {
+  font-family: 'Quicksand';
+}
+tr.H1 {
+  font-family: 'Quicksand';
+  font-weight: bold;
+  padding: 10px 10px;
+  color: #138eff;
+  font-size: 25px;
+  text-align: left;
+  background-color: #faf9f0;
+  text-shadow: 0px -1px 0px #003f79;
+}
+tr.H2 {
+  background-color: #005aad;
+  font-family: 'Quicksand';
+  font-weight: bold;
+  padding: 5px 5px;
+  color: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
+}
+tr.H3 {
+  font-weight: bold;
+  color: #138eff;
+}
+tr.H4 {
+  font-weight: bold;
+}
+tr.LT {
+  font-weight: normal;
+  font-size: 8px;
+}
+th.product {
+  min-width: 300px;
+  max-width: 300px;
+  text-align: left;
+}
+th.index {
+  min-width: 70px;
+  max-width: 70px;
+  text-align: center;
+}
+th.diameter {
+  min-width: 90px;
+  max-width: 90px;
+  text-align: center;
+}
+th.price {
+  min-width: 80px;
+  max-width: 80px;
+  text-align: center;
+}
+th.lns_coat {
+  min-width: 80px;
+  max-width: 80px;
+  text-align: center;
+}
+td {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
+  font-weight: inherit;
+}
+td.product {
+  text-align: left;
+}
+td.index {
+  text-align: center;
+}
+td.diameter {
+  text-align: center;
+}
+td.lns_coat {
+  font-family: 'Courier New';
+  text-align: left;
+  font-weight: inherit;
+}
+td.price {
+  text-align: right;
+  font-weight: inherit;
+}
+.swBtnOn {
+  font-size: 8px;
+  background: #005aad;
+}
+.swBtnOn {
+  font-size: 8px;
+  background: #005aad;
+}
+.swBtnOff {
+  font-size: 8px;
+  background: ButtonFace;
+}
+img.select-status {
+  max-height: 26px;
+}
+img.update-status {
+  max-height: 16px;
+}
+.super-centered {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}

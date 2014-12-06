@@ -1,0 +1,25 @@
+extend layout
+
+block content
+  h3 Signup
+  - if (message.length > 0) {
+    .alert #{message}
+  - }
+    form(action='/signup', method='post')
+      .form-group
+        label Username
+        input.form-control(type='text', name='username')
+      .form-group
+        label Email
+        input.form-control(type='text', name='email')
+      .form-group
+        label Password
+        input.form-control(type='password', name='password')
+      button.btn(type='submit') Signup
+    hr
+    p
+      | Already have an account?
+      a(href='/login') Login
+    p
+      | Or go
+      a(href='/') Home

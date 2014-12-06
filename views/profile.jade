@@ -1,0 +1,28 @@
+extend layout
+
+block content
+	- if (typeof(user) == 'undefined'){
+		p
+		p
+		a(href="/login") Login
+		|  or 
+		a(href="/signup") Signup
+	-} else {
+		h3 Local
+			table.center
+				tbody
+					tr
+						td id
+						td #{user._id}
+					tr
+						td username
+						td #{user.local.username}
+					tr
+						td email
+						td #{user.local.email}
+					tr
+						td password
+						td #{user.local.password}
+			p
+				a(href="/unlink/local") Unlink
+	-}
