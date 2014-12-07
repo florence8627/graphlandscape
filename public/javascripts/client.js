@@ -8,7 +8,7 @@ var SectView2;
 
 var data;
 var keys;
-//var k = 0;
+var k = 0;
 
 
 var datasets = new Object;

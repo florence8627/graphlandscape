@@ -1,0 +1,7 @@
+
+The target system is Ubuntu 14.10.
+
+run install.sh do install depenancies etc.
+
+
+
