@@ -65,8 +65,7 @@ Notes – Postgres Funtions
 ===================
 
 R returns the dataset as a sparse representation just including the data in a 2D matrix.
-Since the 
-
+Since the only thing missing from this is the column names we create a wrapper function that returns two rows.  The first row is a vector containing the the column names and the second row is the 2D matrix containing the data.  For the two aggregate views these column names are effectively hard-coded.
 
 
 
