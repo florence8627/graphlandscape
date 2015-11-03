@@ -3,11 +3,13 @@ html(lang="en")
   head
     title Graph Landscape #{title}
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/cache/jquery-ui-1.11.4/jquery-ui.min.css')
     link(rel='shortcut icon', href='favicon.ico', type='image/x-icon') 
     - if (!nojs)
       script(src='/cache/modernizr.custom.79639.js')
       script(src='/cache/d3.v3.min.js')
       script(src='/cache/jquery-2.1.1.min.js')
+      script(src='/cache/jquery-ui-1.11.4/jquery-ui.min.js')
       script(src='/cache/FileSaver.min.js')
       script(src='/cache/canvas-toBlob.js')
       script(src='/javascripts#{path}.js')

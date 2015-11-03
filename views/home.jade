@@ -15,13 +15,27 @@ block content
     .col.vis.span_1_of_3
       #flo.vis.left.forcedlayout
     .col.vis.span_1_of_3
-      .vis.console
-        textarea#sql_textbox(name='text', rows='5')
-          | SELECT NODES, EDGES, DENSITY, COMPONENTS, MINDEG, MAXDEG, AVGDEG, CLUSTERING_COEFFICIENT AS CLSTR_CO, AVGSHPATH, DIAMETER, LOOPS, FAMILY
-          | FROM GRAPHS WHERE ID < 50
+      #console2.hid.console
         table.transp
           tbody
             tr
+              td.transp
+                button#btnSqlHelper2(onclick='onSqlHelper(this)') SQL Mode
+        table.transp(style='width: 100%')
+          tbody#tblSqlHelper1
+        table.transp(style='width: 100%')
+          tbody#tblSqlHelper2
+            tr
+              td.transp Property
+              td.transp T
+              td.transp F
+              td.transp B
+      #console1.vis.console
+        table.transp
+          tbody
+            tr
+              td.transp
+                button#btnSqlHelper1(onclick='onSqlHelper(this)') SQL Mode
               td.transp
                 button#btnSelect(onclick='onSelect(this)') Select
               td#status1.transp
@@ -30,6 +44,9 @@ block content
                 img(class="select-status super-centered" src="../ajax-blank.png")
               td#status3.transp
                 img(class="select-status super-centered" src="../ajax-blank.png")
+        textarea#sql_textbox(name='text', rows='5')
+          | SELECT NODES, EDGES, DENSITY, COMPONENTS, MINDEG, MAXDEG, AVGDEG, CLSTR_CO, AVGSHPATH, DIAMETER, LOOPS
+          | FROM GRAPHS WHERE 1=1 AND ID <= 50
         table.transp
           tbody
             tr
@@ -59,9 +76,6 @@ block content
                 select#sltlSavedData
                   option(selected="selected") None
                 button#btnRedraw(onclick='onRedraw(this)') Redraw
-        table.transp
-          tbody
-            tr
               td.transp
                 label#lblDeleteDims Delete Dimensions:
                 button#btnResetDims(onclick='onResetDims(this)') Reset
@@ -72,7 +86,6 @@ block content
                 label Annotation:
               td.transp
                 textarea#ids_note(name='text', rows='1')
-            tr
               td.transp
                 button#btnDownloadIDs(onclick='onDownloadIDs()') Download IDs
     .col.vis.span_1_of_3

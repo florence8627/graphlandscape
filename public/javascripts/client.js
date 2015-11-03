@@ -10,6 +10,10 @@ var data;
 var keys;
 var k = 0;
 
+var NodesMin;
+var NodesMax;
+
+var minmax = new Object;
 
 var datasets = new Object;
 var md5sum;
@@ -88,7 +92,7 @@ function onDeleteDims(e) {
 ////////////////////////////////////////////////////////////////////////////////
 function onResetDims(btn) {
 
-  console.log('onResetDims');
+//  console.log('onResetDims');
 
   var kidx = FrntView.dimensions();
   var tidx = FrntView.dimensionTitles();
@@ -97,7 +101,7 @@ function onResetDims(btn) {
 
   for (var i = 0; i < tidx.length; i++) {
     if (kidx.indexOf(i.toString()) == -1) {
-      console.log(kidx[i]);
+//      console.log(kidx[i]);
       kidx.push(i.toString());
     }
   }
@@ -197,6 +201,29 @@ function runSQL(b) {
 
   var sql_text = sql_orig.replace(/\n\n*/g,' ').replace(/ *, */g,',').replace(/  */g,' ');
 
+  // Check for any selected ranges using the sliders
+  for (col in minmax) {
+    if (minmax[col].min < minmax[col].minV) {
+      console.log(col + " : min -> " + minmax[col].minV );
+      sql_text += ' AND '+ col + ' >= ' + minmax[col].minV; 
+    }
+    if (minmax[col].max > minmax[col].maxV) {
+      console.log(col + " : max -> " + minmax[col].maxV );
+      sql_text += ' AND '+ col + ' <= ' + minmax[col].maxV; 
+    }
+  }
+
+  // Check for any selected booleans using the radio buttons
+
+  var table = document.getElementById('tblSqlHelper2');
+
+  for (var i = 1, row; row = table.rows[i]; i++) {
+    if ( ! row.cells[3].childNodes[0].checked) {
+      sql_text += ' AND '+ row.id.slice(6) + ' = ' + row.cells[1].childNodes[0].checked; 
+    }
+  }
+
+   
   md5sum = md5(sql_text);
 
 //  console.log(md5sum);
@@ -316,6 +343,7 @@ function initFrntView() {
   });
 
   $( '#pcp' ).on( 'strumsSelected', function( event, strumsSelected ) {
+//    console.log(strumsSelected.ids);
     datasets[md5sum].selectedIds = strumsSelected.ids;
     runAllAjaxSELECT(0);
     updateSideView(datasets[md5sum].selectedIds);
@@ -337,6 +365,9 @@ function initSideView() {
     .render();
 
   $( '#mds' ).on( 'idsSelected', function( event, idsSelected ) {
+
+//      console.log(idsSelected);
+
 //    alert(sltBrushMode[0][0].value);
 
     if (sltBrushMode[0][0].value == 'None') {
@@ -436,6 +467,10 @@ function reRenderSideView(md5sum) {
 }
 ///////////////////////////////////////////////////////////////////////////////
 function renderSideViewNow(res) {
+
+//  console.log(res.rows[0].d);
+//  console.log(res.rows[1].d);
+
 
   SideView2 = new multidscale(res.rows[0].d, res.rows[1].d);
   if (datasets[md5sum].selectedIds !== undefined) {
@@ -778,15 +813,145 @@ function onDownloadGraphs3() {
 
 }d3.select("svg")
 */
+////////////////////////////////////////////////////////////////////////////////
+
+function initControlPannel() {
+    return;
+
+    NodesMin = 1;
+    NodesMax = 500;
+
+    $( "#slider-range" ).slider({
+      range: true,
+      min: NodesMin,
+      max: NodesMax,
+      values: [ 1, 150 ],
+      slide: function( event, ui ) {
+        $( "#amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        NodesMin = ui.values[ 0 ];
+        NodesMax = ui.values[ 1 ];
+      }
+    });
+    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
+      " - " + $( "#slider-range" ).slider( "values", 1 ) );
+
+}
+////////////////////////////////////////////////////////////////////////////////
+function onSqlHelper(btn) {
+  if (btn.id == 'btnSqlHelper1') {
+    $( "#console1" ).removeClass('vis');
+    $( "#console2" ).removeClass('hid');
+    $( "#console2" ).addClass('vis');
+    $( "#console1" ).addClass('hid');
+  } else {
+    $( "#console2" ).removeClass('vis');
+    $( "#console1" ).removeClass('hid');
+    $( "#console1" ).addClass('vis');
+    $( "#console2" ).addClass('hid');
+  }
+}
+////////////////////////////////////////////////////////////////////////////////
+function initMinMax() {
+
+  var sql = 'SELECT * FROM graphs_mv'
+
+  $.ajax({url:'/home.Ajax/?ACTION=SELECT'
+      ,type:'POST'
+      ,data: JSON.stringify({'SQL': sql })
+      ,contentType: 'application/json; charset=utf-8'
+      ,dataType: 'json'
+      ,beforeSend: function () {
+          // Nothing
+      }
+      ,success: function (response) {
+          var min, max;
+          $.each(response.rows[0], function (key, value) {
+                    if ( key.substr(-3) == 'min' ) {
+                      min = Math.floor(parseFloat(value));
+                    } else {
+                      max = Math.ceil(parseFloat(value));
+                      if ( min < max ) {
+                        var id = key.slice(0,-4);
+//                        console.log(id + " : " + min + "-" + max);
+                        initSliders(id,min,max);
+                      }
+                    }
+                  });
+          initBooleans('planar');
+          initBooleans('biconnected');
+          initBooleans('triconnected');
+          initBooleans('isstgraph');
+          initBooleans('issimple');
+          initBooleans('isacyclic');
+      }
+      ,error: function () {
+          // Nothing
+      }
+    });
+}
+////////////////////////////////////////////////////////////////////////////////
+function initSliders(id,min,max) {
+
+    var newMinMax = new Object;
+    minmax[id] = newMinMax;
+
+    minmax[id].min = min;
+    minmax[id].max = max;
+
+    minmax[id].minV = min;
+    minmax[id].maxV = ( id == 'id' ) ? 50 : max;
+
+    minmax[id].set  = ( id == 'id' );
+
+    var tbl = document.getElementById('tblSqlHelper1');
+    var html = '<tr><td style="width: 100%" class="transp"><label for="values-' + id + '">'+ id + ' range:</label><input type="text" id="values-' + id + '" readonly="" style="border:0; color:#f6931f; font-weight:bold;"></td></tr><tr><td class="transp"><section id="slider-range-'+ id +'" style="margin: 5px"></section></td></tr>';
+    tbl.insertAdjacentHTML('beforeend', html);
+
+    $( "#slider-range-" + id ).slider({
+      range: true,
+      min: minmax[id].min,
+      max: minmax[id].max,
+      values: [ minmax[id].minV, minmax[id].maxV ],
+      slide: function( event, ui ) {
+        $( "#values-" + id ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        minmax[id].minV = ui.values[ 0 ];
+        minmax[id].maxV = ui.values[ 1 ];
+      }
+    });
+    $( "#values-" + id ).val( $( "#slider-range-" + id ).slider( "values", 0 ) +
+      " - " + $( "#slider-range-" + id ).slider( "values", 1 ) );
+
+}
+////////////////////////////////////////////////////////////////////////////////
+function initBooleans(id) {
+
+    var tbl = document.getElementById('tblSqlHelper2');
+    var html  = '<tr id="radio-'+id+'" ><td style="width: 100%" class="transp"><label for="values-' + id + '">'+ id + '</label></td>';
+        html += '<td><input type="radio" name = "cb-'+ id +'" value="true"></td>';
+        html += '<td><input type="radio" name = "cb-'+ id +'" value="false"></td>';
+        html += '<td><input type="radio" name = "cb-'+ id +'" value="both" checked="checked"></td></tr>';
+    tbl.insertAdjacentHTML('beforeend', html);
+}
+
+
+/*
+planar       | boolean                | not null
+biconnected  | boolean                | not null
+triconnected | boolean                | not null
+isstgraph    | boolean                | not null
+issimple     | boolean                | not null
+isacyclic    | boolean                | not null
+*/
 
 ////////////////////////////////////////////////////////////////////////////////
 window.onload = function(e){ 
+  initMinMax();
   initFrntView();
   initPlanView();
   initSideView();
   initSectView();
+  initControlPannel();
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -87,6 +87,9 @@ function scatterplot(data, k) {
          .attr("onclick","onDeleteDims(this);");
 
       if ( k == kidx[i] ) {
+        histogram(data, k);
+
+	/*
         SectView.svg.append("svg:image")
            .attr("class",'icon')
            .attr('x',offx+(w/2))
@@ -95,7 +98,7 @@ function scatterplot(data, k) {
            .attr('width', w/2)
            .attr('height', h/2)
            .attr("xlink:href","search-icon.png");
-
+	*/
         continue;
       }
 
@@ -125,7 +128,7 @@ function scatterplot(data, k) {
       // Add the x-axis.
       graph.append("svg:g")
             .attr("class", "x axis")
-            .attr("transform", "translate(0," + h + ")")
+            .attr("transform", "translate(0," + h + ")") // "translate(0,0)")
             .call(xAxis);
 
       // create left yAxis
@@ -138,7 +141,7 @@ function scatterplot(data, k) {
       // Add the y-axis to the left
       graph.append("svg:g")
             .attr("class", "y axis")
-            .attr("transform", "translate(0,0)")
+            .attr("transform",  "translate(0,0)") // "translate(" + w + ",0)") //
             .call(yAxisLeft);
 
       // Add the line by appending an svg:path element with the data line we created above
@@ -172,6 +175,65 @@ function scatterplot(data, k) {
       for (var i = 0; i < li.length; i++) {
         li[i].classList.remove("hidden");
       }
+  }
+////////////////////////////////////////////////////////////////////////////////
+  function histogram(values0, k) {
+
+  // Generate a Bates distribution of 10 random variables.
+//  var values = d3.range(1000).map(d3.random.bates(10));
+
+  var v0 = values0.map(function(d){ return parseFloat(d[k]);});
+
+  var y = d3.scale.linear()
+      .domain([d3.min(v0), d3.max(v0)])
+      .range([0, h]);
+
+//  console.log([d3.min(v0), d3.max(v0)]);
+
+
+  // Generate a histogram using twenty uniformly-spaced bins.
+  var data = d3.layout.histogram()
+      .bins(y.ticks(50))
+      (v0);
+//      (values);
+
+  var svg = SectView.svg.append("svg:g")
+            .attr("class",'scatterplot')
+            .style("background-color", 'yellow')
+            .attr("width", w + m[1] + m[3])
+            .attr("height", h + m[0] + m[2])
+            .attr("transform", "translate(" + offx + "," + offy + ")");
+
+  if ( data.length == 0 ) {
+    data = [{x: parseInt(d3.max(v0)), y: v0.length}];
+    svg.append("rect")
+       .attr("x"     , 0)
+       .attr("y"     , h)
+       .attr("width" , w)
+       .attr("height", 2);
+  }
+
+//  console.log(v0);
+//  console.log(data);
+
+  var xScale = d3.scale.linear()
+      .domain([d3.min(data, function(d) { return d.x; }), d3.max(data, function(d) { return d.x; })])
+      .range([w, 0]);
+
+  var yScale = d3.scale.linear()
+      .domain([d3.min(data, function(d) { return d.y; }), d3.max(data, function(d) { return d.y; })])
+      .range([0, h]);
+
+
+  svg.selectAll("rect")
+     .data(data)
+     .enter()
+     .append("rect")
+     .attr("x"     , function(d) { return (w - yScale(d.y))/2; })
+     .attr("y"     , function(d) { return      xScale(d.x);    })
+     .attr("width" , function(d) { return      yScale(d.y);    })
+     .attr("height", 2);
+
   }
 ////////////////////////////////////////////////////////////////////////////////
   spObj.updateSectView = updateSectView;

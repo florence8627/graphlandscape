@@ -16,6 +16,16 @@ h = SideView.height() - m[0] - m[2]; // height
 var offy = m[0]/2; //height + 150; // + (h + m[0] + m[2]);
 var offx = m[1]/2; //100;
 
+// colors
+var colors =  ["#000000"
+              ,"#e41a1c"
+              ,"#377eb8"
+              ,"#4daf4a"
+              ,"#984ea3"
+              ,"#ff7f00"
+              ,"#ffff33"
+              ];
+var color = function(d) { return colors[d[1]]; };
 
 var width = w,
     size = h/4,
@@ -28,8 +38,8 @@ var yb = d3.scale.linear()
     .range([0, h]);
 
 
-  xDom = d3.extent(data, function(d) { return parseFloat(d[1]); });
-  yDom = d3.extent(data, function(d) { return parseFloat(d[2]); });
+  xDom = d3.extent(data, function(d) { return parseFloat(d[2]); });
+  yDom = d3.extent(data, function(d) { return parseFloat(d[3]); });
 
   xScale = d3.scale.linear()
             .domain(xDom)
@@ -46,8 +56,8 @@ var yb = d3.scale.linear()
       .on("brushend", brushend);
 
   var iMap = function(d) {return d[0];};
-  var xMap = function(d) {return xScale(parseFloat(d[1])); };
-  var yMap = function(d) {return yScale(parseFloat(d[2])); };
+  var xMap = function(d) {return xScale(parseFloat(d[2])); };
+  var yMap = function(d) {return yScale(parseFloat(d[3])); };
 
   var graph = SideView.svg.append("svg:g")
       .attr("class",'multidscale')
@@ -58,6 +68,7 @@ var yb = d3.scale.linear()
   graph.selectAll(".dot")
         .data(data)
       .enter().append("circle")
+        .style("fill", color)
         .attr("class", "dot")
         .attr("r", 1)
         .attr("mds_id", iMap)
@@ -83,8 +94,8 @@ var yb = d3.scale.linear()
     var e = brush.extent();
 
     graph.selectAll("circle").classed("hidden", function(d) {
-      bool = e[0][0] > d[1] || d[1] > e[1][0]
-          || e[0][1] > d[2] || d[2] > e[1][1];
+      bool = e[0][0] > d[2] || d[2] > e[1][0]
+          || e[0][1] > d[3] || d[3] > e[1][1];
           
       return bool;
     });
@@ -114,6 +125,7 @@ var yb = d3.scale.linear()
   d3.select(self.frameElement).style("height", h + "px");
 
 function updateSideView(ids) {
+//    console.log(ids);
     graph.selectAll("circle").classed("hidden", function(d) {
       return (ids.indexOf(d[0]) < 0);
     });

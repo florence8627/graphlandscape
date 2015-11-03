@@ -41,8 +41,7 @@
 }
 
 .multidscale .dot {
-  fill: black;
-  stroke-width: 1px;
+  stroke-width: 0px;
   stroke: black;
 }
 

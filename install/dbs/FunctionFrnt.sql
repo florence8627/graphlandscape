@@ -26,7 +26,7 @@ $$ LANGUAGE 'plr';
 create or replace function r_frntview_d(sql IN text)
 	returns text[]
 as $$
-ret <<- pg.spi.exec(sub("FROM",",ID FROM",sql))
+ret <<- pg.spi.exec(sub("FROM",",ID, SETID FROM",sql))
 return(ret)
 $$ LANGUAGE 'plr';
 

@@ -219,6 +219,9 @@ header .col {
   float: left;
   margin: 0 0 0 0;
 }
+header .hid {
+  display: none;
+}
 header a.top {
   text-decoration: none;
   font-family: 'Quicksand';

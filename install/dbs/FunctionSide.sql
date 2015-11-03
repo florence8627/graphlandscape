@@ -20,7 +20,7 @@ create or replace function r_sideview_c(sql IN text)
 	returns text[]
 as $$
 
-ret <- c('id','mapx','mapy')
+ret <- c('id','setid','mapx','mapy')
 return( ret ) 
 $$ LANGUAGE 'plr';
 
@@ -33,10 +33,13 @@ as $$
 require(doMC)
 registerDoMC(cores=4)
 
-dataset <<- pg.spi.exec(sub("SELECT","SELECT ID",sql))
-id <- dataset[,1]
+dataset <<- pg.spi.exec(sub("SELECT","SELECT ID, SETID",sql))
+   id <- dataset[,1]
+setid <- dataset[,2]
 
-d <- dist(dataset[,-1]) # get the distance (ignore 'id')
+n <- scale(dataset[,-2]) # normalise dataset
+
+d <- dist(n) # get the distance (ignore 'id' and 'setid')
 
 mds <- cmdscale(d, eig = TRUE, k = 2)
 #mds <- smacofSym(d, ndim = 2)
@@ -44,7 +47,7 @@ mds <- cmdscale(d, eig = TRUE, k = 2)
 xmap <- mds$points[, 1]
 ymap <- mds$points[, 2]
 
-ret = cbind(id,xmap,ymap)
+ret = cbind(id,setid,xmap,ymap)
 return(ret)
 
 $$ LANGUAGE 'plr';
@@ -67,7 +70,7 @@ create or replace function r_sideview_d2(sql IN text)
 	returns text[]
 as $$
 
-ret <<- pg.spi.exec(sub(".*FROM","SELECT ID, MAPX, MAPY FROM",sql))
+ret <<- pg.spi.exec(sub(".*FROM","SELECT ID, SETID, MAPX, MAPY FROM",sql))
 
 ret
 

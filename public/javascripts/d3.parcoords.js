@@ -11,8 +11,9 @@ d3.parcoords = function(config) {
     height: 300,
     margin: { top: 24, right: 0, bottom: 12, left: 0 },
     color: "#069",
+//    color: color,
     composite: "source-over",
-    alpha: 0.7,
+    alpha: 1.0,
     bundlingStrength: 0.5,
     bundleDimension: null,
     smoothness: 0.25,
@@ -21,6 +22,19 @@ d3.parcoords = function(config) {
   };
 
   extend(__, config);
+
+var colors =  ["#000000"
+              ,"#e41a1c"
+              ,"#377eb8"
+              ,"#4daf4a"
+              ,"#984ea3"
+              ,"#ff7f00"
+              ,"#ffff33"
+              ];
+
+
+var color = function(d) { /* console.log(colors[d[d.length-1]]); */ return colors[d[d.length-1]]; };
+
 var pc = function(selection) {
   selection = pc.selection = d3.select(selection);
 
@@ -442,7 +456,8 @@ function single_curve(d, ctx) {
 
 // draw single polyline
 function color_path(d, i, ctx) {
-  ctx.strokeStyle = d3.functor(__.color)(d, i);
+//  ctx.strokeStyle = d3.functor(__.color)(d, i);
+  ctx.strokeStyle = d3.functor(color)(d, i);
   ctx.beginPath();
   if (__.bundleDimension === null || (__.bundlingStrength === 0 && __.smoothness == 0)) {
     single_path(d, ctx);
@@ -623,7 +638,7 @@ pc.updateFrntView =   function(ids) {
 
   newSelection = [];
   for (i= 0; i<__.data.length; i++) {
-    if ( ids.indexOf(__.data[i][z]) >= 0 ) {
+    if ( ids.indexOf(__.data[i][z-1]) >= 0 ) {
       newSelection.push(__.data[i]);
     }
   }
@@ -792,7 +807,7 @@ pc.brushMode = function(mode) {
         // Trigger event from Canvas containing selected brushed ids
 
         var ids = __.brushed.map( function( strum ) {
-          return strum[ strum.length - 1 ];
+          return strum[ strum.length - 2 ];
         } );
         $( this ).trigger( 'strumsSelected', {
           ids: ids
